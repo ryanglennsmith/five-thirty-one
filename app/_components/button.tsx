@@ -7,8 +7,15 @@ type Props = {
   btnText: string;
   marginTop?: string;
   btnMsg?: string;
+  userId?: number;
 };
-const ButtonFrame = ({ btnType, btnText, marginTop, btnMsg }: Props) => {
+const ButtonFrame = ({
+  btnType,
+  btnText,
+  marginTop,
+  btnMsg,
+  userId,
+}: Props) => {
   const [msg, setMsg] = useState("henlo");
   const router = useRouter();
   const handleClick = (type: string): void => {

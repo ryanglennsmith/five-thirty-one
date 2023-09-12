@@ -1,18 +1,24 @@
 import getWeights from "@/services/getWeights";
 import { ILifts } from "@/types/ILifts";
 import { IScheme, Scheme } from "@/types/IScheme";
+import { MyNumbers } from "@prisma/client";
 import Link from "next/link";
 type plan = {
   [key: string]: number;
 };
-type Props = {};
-const Weights = async ({}: Props) => {
+type Props = { userId: number };
+const Weights = async ({ userId }: Props) => {
   // TODO get the lifts and bar from the db / config
-  const weightsFromDb = await getWeights(2);
+  const weightsFromDb: MyNumbers = await getWeights(2);
   console.log(`weightsFromDb: ${weightsFromDb}`);
   console.table(weightsFromDb);
   // const lifts: ILifts = { dl: 165, sq: 117, bp: 70, ohp: 48 };
-  const lifts: ILifts = {dl: weightsFromDb.DL || 0, sq: weightsFromDb.SQ || 0, bp: weightsFromDb.BP || 0, ohp: weightsFromDb.OHP || 0}
+  const lifts: ILifts = {
+    dl: weightsFromDb.DL,
+    sq: weightsFromDb.SQ,
+    bp: weightsFromDb.BP,
+    ohp: weightsFromDb.OHP,
+  };
 
   const bar = 20;
   const scheme = new Scheme();

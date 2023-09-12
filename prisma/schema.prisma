@@ -13,10 +13,10 @@ model User {
 }
 
 model MyNumbers {
-  NumbersId Int  @id @unique(map: "sqlite_autoindex_MyNumbers_1") @default(autoincrement())
-  UserId    Int?
-  DL        Int?
-  SQ        Int?
-  BP        Int?
-  OHP       Int?
+  NumbersId Int   @id @unique(map: "sqlite_autoindex_MyNumbers_1") @default(autoincrement())
+  UserId    Int
+  DL        Float
+  SQ        Float
+  BP        Float
+  OHP       Float
 }

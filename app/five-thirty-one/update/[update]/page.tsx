@@ -41,6 +41,7 @@ const UpdatePage = ({ params }: { params: { update: string } }) => {
         btnText="update"
         marginTop="mt-4"
         btnMsg={update.toString()}
+        userId={2}
       />
     </div>
   );
