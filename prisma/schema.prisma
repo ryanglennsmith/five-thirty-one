@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../db/data.db"
+}
+
+model User {
+  ID   Int    @id @unique(map: "sqlite_autoindex_User_1") @default(autoincrement())
+  Name String
+}
+
+model MyNumbers {
+  NumbersId Int  @id @unique(map: "sqlite_autoindex_MyNumbers_1") @default(autoincrement())
+  UserId    Int?
+  DL        Int?
+  SQ        Int?
+  BP        Int?
+  OHP       Int?
+}

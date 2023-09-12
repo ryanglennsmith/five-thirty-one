@@ -1,10 +1,10 @@
-const PlateMath = ({ params }: { params: { calculator: string[] } }) => {
-  const splitPlates = (weightStr: string, barStr: string): number[] => {
-    const barWeight = parseFloat(barStr);
+const MathPage = ({ params }: { params: { math: string } }) => {
+  const splitPlates = (weightStr: string, bar: string): number[] => {
+    const barWeight = parseFloat(bar);
 
     const weightToLift = parseFloat(weightStr);
     // this magic array could be replaced with user input/persistent storage
-    const platesAvailable = [20, 15, 10, 5, 2.5, 2, 1.25, 1, 0.5];
+    const platesAvailable = [20, 15, 10, 5, 2.5, 1.25];
     const platesToAdd: number[] = [];
     let weightLeft = (weightToLift - barWeight) / 2;
 
@@ -19,8 +19,16 @@ const PlateMath = ({ params }: { params: { calculator: string[] } }) => {
     }
     return platesToAdd;
   };
-  const bar = params.calculator[0];
-  const weight = params.calculator[1];
+
+  // const urlstr = params.math;
+
+  // const weight = urlstr.split("%26")[1].split("%3D")[1];
+  // const bar = urlstr.split("%26")[2].split("%3D")[1];
+  // console.log(`thing: ${weight} and ${bar}`);
+
+  // console.log(plates);
+  const weight = "100";
+  const bar = "20";
   const plates = splitPlates(weight, bar);
   return (
     <div className="font-mono text-lime-500 relative min-h-full h-full pb-24 flex flex-col items-center justify-center">
@@ -39,4 +47,4 @@ const PlateMath = ({ params }: { params: { calculator: string[] } }) => {
     </div>
   );
 };
-export default PlateMath;
+export default MathPage;

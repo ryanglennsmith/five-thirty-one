@@ -1,3 +1,4 @@
+import getWeights from "@/services/getWeights";
 import { ILifts } from "@/types/ILifts";
 import { IScheme, Scheme } from "@/types/IScheme";
 import Link from "next/link";
@@ -5,8 +6,11 @@ type plan = {
   [key: string]: number;
 };
 type Props = {};
-const Weights = ({}: Props) => {
+const Weights = async ({}: Props) => {
   // TODO get the lifts and bar from the db / config
+  const weightsFromDb = await getWeights(1);
+  console.log(`weightsFromDb: ${weightsFromDb}`);
+  console.table(weightsFromDb);
   const lifts: ILifts = { dl: 165, sq: 117, bp: 70, ohp: 48 };
   const bar = 20;
   const scheme = new Scheme();
@@ -112,7 +116,8 @@ const Weights = ({}: Props) => {
 
           plan[`${l}${week}${set}`] = scheme.Calculate(
             lifts[l as keyof ILifts],
-            lookup
+            lookup,
+            l
           );
         }
       }
