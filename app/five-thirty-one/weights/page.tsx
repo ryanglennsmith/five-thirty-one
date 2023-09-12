@@ -8,10 +8,12 @@ type plan = {
 type Props = {};
 const Weights = async ({}: Props) => {
   // TODO get the lifts and bar from the db / config
-  const weightsFromDb = await getWeights(1);
+  const weightsFromDb = await getWeights(2);
   console.log(`weightsFromDb: ${weightsFromDb}`);
   console.table(weightsFromDb);
-  const lifts: ILifts = { dl: 165, sq: 117, bp: 70, ohp: 48 };
+  // const lifts: ILifts = { dl: 165, sq: 117, bp: 70, ohp: 48 };
+  const lifts: ILifts = {dl: weightsFromDb.DL || 0, sq: weightsFromDb.SQ || 0, bp: weightsFromDb.BP || 0, ohp: weightsFromDb.OHP || 0}
+
   const bar = 20;
   const scheme = new Scheme();
   const litLifts = Object.keys(lifts);

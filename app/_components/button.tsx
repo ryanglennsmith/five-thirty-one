@@ -2,8 +2,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-type Props = { btnType: string; btnText: string; marginTop?: string };
-const ButtonFrame = ({ btnType, btnText, marginTop }: Props) => {
+type Props = {
+  btnType: string;
+  btnText: string;
+  marginTop?: string;
+  btnMsg?: string;
+};
+const ButtonFrame = ({ btnType, btnText, marginTop, btnMsg }: Props) => {
   const [msg, setMsg] = useState("henlo");
   const router = useRouter();
   const handleClick = (type: string): void => {
@@ -15,7 +20,7 @@ const ButtonFrame = ({ btnType, btnText, marginTop }: Props) => {
         router.push("/five-thirty-one/weights");
         break;
       case "update":
-        //TODO send to db
+        console.log(`update btn press number: ${btnMsg}`);
         break;
       default:
         console.log("default btn press, no fn assigned");
