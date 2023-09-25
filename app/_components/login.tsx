@@ -14,6 +14,8 @@ const getIsLoggedIn = async (): Promise<boolean> => {
 };
 
 export default async function Login() {
+  //TODO - get user id from session
+  const userId = 2;
   const isLoggedIn = await getIsLoggedIn();
   //   if (isLoggedIn) {
   //     redirect("/five-thirty-one");
@@ -22,7 +24,12 @@ export default async function Login() {
   //   }
   return (
     <div className="font-mono text-lime-500 relative min-h-full h-full pb-24 flex flex-col items-center justify-center">
-      <ButtonFrame btnType={"login"} btnText="henlo" marginTop="mt-80" />
+      <ButtonFrame
+        btnType={"login"}
+        btnText="henlo"
+        marginTop="mt-80"
+        userId={userId}
+      />
     </div>
   );
 }

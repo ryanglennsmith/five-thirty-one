@@ -6,13 +6,14 @@ import Link from "next/link";
 type plan = {
   [key: string]: number;
 };
-type Props = { userId: number };
-const Weights = async ({ userId }: Props) => {
+type Params = { params: { user: string } };
+const Weights = async ({ params }: Params) => {
+  console.log(`params.user: ${params.user}`);
   // TODO get the lifts and bar from the db / config
-  const weightsFromDb: MyNumbers = await getWeights(2);
+  const userId = parseInt(params.user);
+  const weightsFromDb: MyNumbers = await getWeights(userId);
   console.log(`weightsFromDb: ${weightsFromDb}`);
   console.table(weightsFromDb);
-  // const lifts: ILifts = { dl: 165, sq: 117, bp: 70, ohp: 48 };
   const lifts: ILifts = {
     dl: weightsFromDb.DL,
     sq: weightsFromDb.SQ,
@@ -24,13 +25,17 @@ const Weights = async ({ userId }: Props) => {
   const scheme = new Scheme();
   const litLifts = Object.keys(lifts);
   const litScheme = Object.keys(scheme);
-  const mathUrlGenerator = (bar: number, weight: number): string => {
-    return `plate-math/${bar}/${weight}`;
+  const mathUrlGenerator = (
+    bar: number,
+    weight: number,
+    set: number
+  ): string => {
+    return `/five-thirty-one/plate-math/${bar}/${weight}/${set}`;
   };
-  const tdGenerator = (weight: number) => {
+  const tdGenerator = (bar: number, weight: number, set: number) => {
     return (
       <td className="p-1">
-        <Link href={mathUrlGenerator(bar, weight)}>{weight}</Link>
+        <Link href={mathUrlGenerator(bar, weight, set)}>{weight}</Link>
       </td>
     );
   };
@@ -40,7 +45,7 @@ const Weights = async ({ userId }: Props) => {
         <td>set {num}</td>
         <td></td>
         {set.map((l) => {
-          return tdGenerator(l[1]);
+          return tdGenerator(bar, l[1], num);
         })}
       </tr>
     );
@@ -60,7 +65,11 @@ const Weights = async ({ userId }: Props) => {
           <td></td>
           <td></td>
           <td>
-            <Link href={`update/${lift}`}>u?</Link>
+            <Link
+              href={`/five-thirty-one/update/${userId}/${lift}/dl=${lifts.dl}&sq=${lifts.sq}&bp=${lifts.bp}&ohp=${lifts.ohp}`}
+            >
+              u?
+            </Link>
           </td>
         </tr>
 

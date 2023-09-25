@@ -1,4 +1,6 @@
-const PlateMath = ({ params }: { params: { calculator: string[] } }) => {
+import ButtonFrame from "@/app/_components/button";
+type Params = { params: { calculator: string[] } };
+const PlateMath = ({ params }: Params) => {
   const splitPlates = (weightStr: string, barStr: string): number[] => {
     const barWeight = parseFloat(barStr);
 
@@ -22,6 +24,7 @@ const PlateMath = ({ params }: { params: { calculator: string[] } }) => {
   const bar = params.calculator[0];
   const weight = params.calculator[1];
   const plates = splitPlates(weight, bar);
+  const set = params.calculator[2];
   return (
     <div className="font-mono text-lime-500 relative min-h-full h-full pb-24 flex flex-col items-center justify-center">
       {" "}
@@ -36,6 +39,16 @@ const PlateMath = ({ params }: { params: { calculator: string[] } }) => {
           </div>
         ))}
       </div>
+      {set === "3" && (
+        <div className="flex flex-col items-center">
+          <div className="text-xl">set {set}</div>
+          <input
+            placeholder="hoohah"
+            className="text-2xl bg-slate-950 mt-2"
+          ></input>
+          <ButtonFrame btnType="setThreeNotes" btnText="add notes" />
+        </div>
+      )}
     </div>
   );
 };

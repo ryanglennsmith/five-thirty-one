@@ -1,9 +1,19 @@
 "use client";
 import ButtonFrame from "@/app/_components/button";
+import getWeights from "@/services/getWeights";
 import { ILifts } from "@/types/ILifts";
-import { useState } from "react";
-const UpdatePage = ({ params }: { params: { update: string } }) => {
-  // TODO go get the lifts
+import { useState, useEffect } from "react";
+type Params = { params: { update: string[] } };
+const UpdatePage = ({ params }: Params) => {
+  const lifts: ILifts = Object.create(null);
+  const re = /%\w{2}/gi;
+  const paramLifts = params.update[2].split(re);
+  paramLifts.forEach((lift, idx) => {
+    if (idx % 2 === 0) {
+      lifts[lift as keyof ILifts] = parseFloat(paramLifts[idx + 1]);
+    }
+  });
+  console.log(paramLifts);
   const defineUpdate = (lift: string, current: number): number => {
     if (lift === "dl" || lift === "sq") {
       return current + 5;
@@ -11,13 +21,15 @@ const UpdatePage = ({ params }: { params: { update: string } }) => {
       return current + 2.5;
     }
   };
-  const lifts: ILifts = { dl: 165, sq: 117, bp: 70, ohp: 48 };
+  const userId = parseInt(params.update[0]);
+
   const litLifts = Object.keys(lifts);
-  const currentWeight: number = lifts[params.update as keyof ILifts];
-  const currentLift: string = params.update;
+  const currentWeight: number = lifts[params.update[1] as keyof ILifts];
+  const currentLift: string = params.update[1];
   const [update, setUpdate] = useState(
     defineUpdate(currentLift, currentWeight)
   );
+
   return (
     <div className="font-mono text-lime-500 relative min-h-full h-full pb-24 flex flex-col items-center justify-center mt-40">
       <h1 className="text-4xl">update {currentLift}?</h1>
@@ -42,6 +54,7 @@ const UpdatePage = ({ params }: { params: { update: string } }) => {
         marginTop="mt-4"
         btnMsg={update.toString()}
         userId={2}
+        liftAndWeight={{ lift: currentLift, weight: update }}
       />
     </div>
   );

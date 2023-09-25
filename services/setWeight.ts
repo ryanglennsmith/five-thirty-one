@@ -6,9 +6,11 @@ const setWeight = async (
   lift: string,
   id: number
 ): Promise<MyNumbers> => {
+  lift = lift.toUpperCase();
   const weights = await prisma.myNumbers.update({
     where: { NumbersId: id },
     data: { [lift]: weight },
   });
   return weights;
 };
+export default setWeight;
