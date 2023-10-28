@@ -8,15 +8,30 @@ datasource db {
 }
 
 model User {
-  ID   Int    @id @unique(map: "sqlite_autoindex_User_1") @default(autoincrement())
-  Name String
+  ID        Int         @id @unique(map: "sqlite_autoindex_User_1") @default(autoincrement())
+  Name      String
+  MyNumbers MyNumbers[]
+  Records   Records[]
 }
 
 model MyNumbers {
   NumbersId Int   @id @unique(map: "sqlite_autoindex_MyNumbers_1") @default(autoincrement())
+  User      User  @relation(fields: [UserId], references: [ID])
   UserId    Int
   DL        Float
   SQ        Float
   BP        Float
   OHP       Float
+}
+
+model Records {
+  RecordId      Int    @id @unique(map: "sqlite_autoindex_Records_1") @default(autoincrement())
+  User          User   @relation(fields: [UserId], references: [ID])
+  UserId        Int
+  Week_Of_Cycle Int
+  Lift          String
+  Date          String
+  Weight        Float
+  Set_3_Reps    Int
+  Comments      String
 }

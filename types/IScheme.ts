@@ -18,10 +18,13 @@ export class Scheme implements IScheme {
     Math.round(oneRm * this.base * 10) / 10;
   Calculate = (oneRm: number, weekSet: number, lift: string): number => {
     const baseResult = this.CalculateBase(oneRm);
-    if (lift === "sq" || lift === "dl") {
-      return Math.round((baseResult * weekSet) / 2.5) * 2.5;
-    } else {
-      return Math.round(baseResult * weekSet);
+    switch (lift) {
+      case "dl":
+        return Math.round((baseResult * weekSet) / 5) * 5;
+      case "sq":
+        return Math.round((baseResult * weekSet) / 2.5) * 2.5;
+      default:
+        return Math.round(baseResult * weekSet);
     }
   };
   base = 0.9;
